@@ -8,8 +8,16 @@ import { FaBuilding } from "react-icons/fa6";
 import { IoLogOutSharp } from "react-icons/io5";
 
 function BaseLayout({ children }) {
-  const user = localStorage.getItem("user");
-  const data = JSON.parse(user);
+
+  let data = null;
+
+  // Check if localStorage is available
+  if (typeof localStorage !== 'undefined') {
+    const user = localStorage.getItem("user");
+    if (user) {
+      data = JSON.parse(user);
+    }
+  }
 
   return (
     <div className="w-screen h-screen">
