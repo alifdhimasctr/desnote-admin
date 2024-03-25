@@ -11,8 +11,15 @@ import { stringify } from "postcss";
 
 export default function Dashboard() {
 
-  const user = localStorage.getItem("user");
-  const data = JSON.parse(user);
+  let data = null;
+
+  // Check if localStorage is available
+  if (typeof localStorage !== 'undefined') {
+    const user = localStorage.getItem("user");
+    if (user) {
+      data = JSON.parse(user);
+    }
+  }
 
   const [search, setSearch] = useState("");
 

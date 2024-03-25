@@ -27,8 +27,14 @@ export default function Login() {
       );
 
       if (response.status === 201) {
-        localStorage.setItem("token", response.data.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.data));
+        const token = response.data.data.token;
+        const userData = response.data.data;
+
+        if (typeof localStorage !== "undefined") {
+          localStorage.setItem("token", token);
+          localStorage.setItem("userData", JSON.stringify(userData));
+        }
+        
         router.push("/");
         toast.success("Login Success");
       }

@@ -13,8 +13,15 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 export default function Department() {
+  let data = null;
+
+// Check if localStorage is available
+if (typeof localStorage !== 'undefined') {
   const user = localStorage.getItem("user");
-  const data = JSON.parse(user);
+  if (user) {
+    data = JSON.parse(user);
+  }
+}
 
   const [search, setSearch] = useState("");
 

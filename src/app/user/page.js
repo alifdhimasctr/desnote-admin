@@ -12,8 +12,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function User() {
-  const user = localStorage.getItem("user");
-  const data = JSON.parse(user);
+  let data = null;
+
+  if (typeof localStorage !== 'undefined') {
+    const user = localStorage.getItem("user");
+    if (user) {
+      data = JSON.parse(user);
+    }
+  }
 
   const [search, setSearch] = useState("");
 
