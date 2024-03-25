@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense} from "react";
 import BaseLayout from "../layout/baselayout";
 import axios from "axios";
 import Modal from "../component/modal";
@@ -168,6 +168,7 @@ if (typeof localStorage !== 'undefined') {
         <h1 className="text-xl font-bold text-gray-600 mb-3">Department</h1>
         <div className="flex flex-col gap-2">
           <div className="flex flex-row justify-between gap-8">
+            <Suspense>
             <input
               type="text"
               className="w-1/5 border-2 rounded-lg p-1"
@@ -175,6 +176,7 @@ if (typeof localStorage !== 'undefined') {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
+            </Suspense>
             <button
               onClick={() => setShowAddDepartment(true)}
               className=" bg-green-500 text-white text-sm h-max py-1 px-2 rounded"

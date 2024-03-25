@@ -7,6 +7,7 @@ import BaseLayout from "../layout/baselayout";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import Modal from "../component/modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -214,6 +215,7 @@ export default function User() {
         <h1 className="text-xl font-bold text-gray-600 mb-3">User</h1>
         <div className="flex flex-col gap-2">
           <div className="flex flex-row justify-between gap-8">
+            <Suspense>
             <input
               type="text"
               className="w-1/5 border-2 rounded-lg p-1"
@@ -221,6 +223,7 @@ export default function User() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
+            </Suspense>
             <button
               onClick={() => setShowAddUser(true)}
               className=" bg-green-500 text-white text-sm h-max py-1 px-2 rounded"
