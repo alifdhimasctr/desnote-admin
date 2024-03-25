@@ -11,6 +11,11 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState(null);
 
+  useEffect(() => {
+    // Perform localStorage action
+    const item = localStorage.getItem('key')
+  }, [])
+
   const handleLogin = async () => {
     try {
       const response = await axios.post(
