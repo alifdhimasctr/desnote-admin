@@ -7,20 +7,14 @@ import BaseLayout from "../layout/baselayout";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Suspense } from "react";
 import Modal from "../component/modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function User() {
-  let data = null;
 
-  if (typeof localStorage !== 'undefined') {
-    const user = localStorage.getItem("user");
-    if (user) {
-      data = JSON.parse(user);
-    }
-  }
+export default function User() {
+  const user = localStorage.getItem("user");
+  const data = JSON.parse(user);
 
   const [search, setSearch] = useState("");
 
@@ -39,6 +33,7 @@ export default function User() {
   const [phone, setPhone] = useState("");
   const [department, setDepartment] = useState("");
   const [role, setRole] = useState("");
+  const [status, setStatus] = useState("");
 
   const searchParams = useSearchParams();
 
@@ -105,6 +100,7 @@ export default function User() {
       setPhone(response.data.data.phone);
       setDepartment(response.data.data.department.idDepartment);
       setRole(response.data.data.role);
+      setStatus(response.data.data.status);
 
 
 
@@ -170,6 +166,7 @@ export default function User() {
         phone: phone,
         idDepartments: department,
         role: role,
+        status: status
       },
       {
         headers: {
@@ -183,6 +180,7 @@ export default function User() {
     setPhone("");
     setDepartment(null);
     setRole("");
+    setStatus("");
     setShowUpdateUser(false);
     handleOpenUpdate();
     toast.success("User berhasil diubah");
@@ -208,6 +206,7 @@ export default function User() {
     handleOpenDelete();
     toast.success("User berhasil dihapus");
   };
+  
 
   return (
     <div>
@@ -215,7 +214,6 @@ export default function User() {
         <h1 className="text-xl font-bold text-gray-600 mb-3">User</h1>
         <div className="flex flex-col gap-2">
           <div className="flex flex-row justify-between gap-8">
-            <Suspense>
             <input
               type="text"
               className="w-1/5 border-2 rounded-lg p-1"
@@ -223,7 +221,6 @@ export default function User() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            </Suspense>
             <button
               onClick={() => setShowAddUser(true)}
               className=" bg-green-500 text-white text-sm h-max py-1 px-2 rounded"
@@ -232,7 +229,7 @@ export default function User() {
             </button>
           </div>
 
-          <table className="table-auto">
+          <table className="table-auto text-sm">
             <thead className="bg-gray-200">
               <tr className="">
                 <th className="text-center">No</th>
@@ -242,6 +239,7 @@ export default function User() {
                 <th className="text-center">Nomor Telepon</th>
                 <th className="text-center">Role</th>
                 <th className="text-center">Departemen</th>
+                <th className="text-center">Status</th>
                 <th className="text-center">Action</th>
               </tr>
             </thead>
@@ -271,7 +269,7 @@ export default function User() {
                   }
                 })
                 .map((user) => (
-                  <tr key={user.id} className="text-center">
+                  <tr key={user.id} className="text-left justify-center items-center">
                     <td className="border py-1">
                       {userData.indexOf(user) + 1}
                     </td>
@@ -283,23 +281,19 @@ export default function User() {
                     <td className="border py-1">
                       {user.department.departmentName}
                     </td>
+                    <td className="border text-center py-1 items-center justify-center self-center">
+                      {user.status === "Active" ? <a className="text-xs p-2 rounded text-white bg-green-500">AKTIF</a> : <a className="text-xs p-2 rounded text-white bg-red-500">INAKTIF</a>}
+                    </td>
                     <td className="flex border py-1 gap-2 justify-center">
                       <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded"
+                        className=" text-blue-500 hover:text-gray-500  font-bold py-2 px-3 rounded"
                         onClick={() =>
                           id ? handleOpenUpdate() : handleOpenUpdate(user.id)
                         }
                       >
                         <FiEdit />
                       </button>
-                      <button
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 rounded"
-                        onClick={() =>
-                          id ? handleOpenDelete() : handleOpenDelete(user.id)
-                        }
-                      >
-                        <RiDeleteBin6Line />
-                      </button>
+                      
                     </td>
                   </tr>
                 ))}
@@ -514,6 +508,28 @@ export default function User() {
                 <option value="PIMPINAN">Pimpinan</option>
               </select>
             </div>
+            
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="status"
+              >
+                Status
+              </label>
+              <select
+                className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option disabled selected>
+                  Pilih Status
+                </option>
+                <option value="Active">Aktif</option>
+                <option value="Inactive">Tidak Aktif</option>
+              </select>
+            </div>
+
             <div className="flex items-center justify-between">
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"

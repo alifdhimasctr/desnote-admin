@@ -8,16 +8,8 @@ import { FaBuilding } from "react-icons/fa6";
 import { IoLogOutSharp } from "react-icons/io5";
 
 function BaseLayout({ children }) {
-
-  let data = null;
-
-  // Check if localStorage is available
-  if (typeof localStorage !== 'undefined') {
-    const user = localStorage.getItem("user");
-    if (user) {
-      data = JSON.parse(user);
-    }
-  }
+  const user = localStorage.getItem("user");
+  const data = JSON.parse(user);
 
   return (
     <div className="w-screen h-screen">
@@ -31,7 +23,7 @@ function BaseLayout({ children }) {
               <div className="flex flex-row items-center justify-start align-middle text-white gap-2">
                 <MdDashboard />
                 <a
-                  href="/"
+                  href="/dashboard"
                   className="flex items-center justify-center text-sm text-white"
                 >
                   DASHBOARD

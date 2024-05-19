@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, Suspense} from "react";
+import React, { useState, useEffect } from "react";
 import BaseLayout from "../layout/baselayout";
 import axios from "axios";
 import Modal from "../component/modal";
@@ -13,19 +13,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 export default function Department() {
-  let data = null;
-
-// Check if localStorage is available
-if (typeof localStorage !== 'undefined') {
   const user = localStorage.getItem("user");
-  if (user) {
-    data = JSON.parse(user);
-  }
-}
+  const data = JSON.parse(user);
 
   const [search, setSearch] = useState("");
 
   const [departmentData, setDepartmentData] = useState([]);
+  const [status, setStatus] = useState("");
   const [departmentUpdate, setDepartmentUpdate] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -129,6 +123,7 @@ if (typeof localStorage !== 'undefined') {
       process.env.NEXT_PUBLIC_BASE_URL + `/department/${id}`,
       {
         departmentName: departmentValue,
+        status: status,
       },
       {
         headers: {
@@ -168,7 +163,6 @@ if (typeof localStorage !== 'undefined') {
         <h1 className="text-xl font-bold text-gray-600 mb-3">Department</h1>
         <div className="flex flex-col gap-2">
           <div className="flex flex-row justify-between gap-8">
-            <Suspense>
             <input
               type="text"
               className="w-1/5 border-2 rounded-lg p-1"
@@ -176,7 +170,6 @@ if (typeof localStorage !== 'undefined') {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            </Suspense>
             <button
               onClick={() => setShowAddDepartment(true)}
               className=" bg-green-500 text-white text-sm h-max py-1 px-2 rounded"
@@ -185,11 +178,12 @@ if (typeof localStorage !== 'undefined') {
             </button>
           </div>
 
-          <table className="table-auto">
+          <table className="table-auto text-sm">
             <thead className="bg-gray-200">
               <tr>
                 <th className="px-4 py-2">No</th>
                 <th className="px-4 py-2">Department Name</th>
+                <th className="px-4 py-2">Status</th>
                 <th className="px-4 py-2">Action</th>
               </tr>
             </thead>
@@ -211,9 +205,13 @@ if (typeof localStorage !== 'undefined') {
                   <tr key={department.id} className="text-center">
                     <td className="border py-1">{departmentData.indexOf(department) + 1}</td>
                     <td className="border py-1">{department.departmentName}</td>
+                    <td className="border py-1">
+                    {department.status === "Active" ? <a className="text-xs p-2 rounded text-white bg-green-500">AKTIF</a> : <a className="text-xs p-2 rounded text-white bg-red-500">INAKTIF</a>}
+                    </td>
+                    
                     <td className="flex border py-1 gap-2 justify-center">
                       <button
-                        className="bg-blue-500 text-white text-sm h-max py-2 px-3 rounded"
+                        className=" text-blue-500 hover:text-gray-500  font-bold py-2 px-3 rounded"
                         onClick={() =>
                           id
                             ? handleOpenUpdate()
@@ -222,16 +220,7 @@ if (typeof localStorage !== 'undefined') {
                       >
                         <FiEdit />
                       </button>
-                      <button
-                        className="bg-red-500 text-white text-sm h-max py-2 px-3 rounded"
-                        onClick={() =>
-                          id
-                            ? handleOpenDelete()
-                            : handleOpenDelete(department.idDepartment)
-                        }
-                      >
-                        <RiDeleteBin6Line />
-                      </button>
+                      
                     </td>
                   </tr>
                 ))}
@@ -282,6 +271,15 @@ if (typeof localStorage !== 'undefined') {
                 value={departmentValue}
                 onChange={(e) => setDepartmentValue(e.target.value)}
               />
+              <label>Status</label>
+              <select
+                className="border-2 rounded-lg p-1"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value="Active">AKTIF</option>
+                <option value="Inactive">TIDAK AKTIF</option>
+              </select>
               <button
                 type="submit"
                 className="bg-green-500 text-white text-sm h-max py-1 px-2 w-max rounded"

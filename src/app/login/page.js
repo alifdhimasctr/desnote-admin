@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,11 +10,6 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState(null);
-
-  useEffect(() => {
-    // Perform localStorage action
-    const item = localStorage.getItem('key')
-  }, [])
 
   const handleLogin = async () => {
     try {
@@ -27,16 +22,10 @@ export default function Login() {
       );
 
       if (response.status === 201) {
-        const token = response.data.data.token;
-        const userData = response.data.data;
-
-        if (typeof localStorage !== "undefined") {
-          localStorage.setItem("token", token);
-          localStorage.setItem("userData", JSON.stringify(userData));
-        }
-        
-        router.push("/");
+        localStorage.setItem("token", response.data.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.data));
         toast.success("Login Success");
+        router.push("/dashboard");
       }
       setErrMsg(null);
     } catch (error) {
