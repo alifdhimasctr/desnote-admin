@@ -43,15 +43,15 @@ export default function Login() {
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="username"
+                htmlFor="email"
               >
-                Username
+                Email
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="username"
                 type="text"
-                placeholder="Username"
+                placeholder="Email"
                 required
                 onChange={(e) => setUsername(e.target.value)}
               />
@@ -85,6 +85,7 @@ export default function Login() {
         </div>
         <div className="p-8 flex items-center justify-center rounded-r-xl w-80 bg-blue-700 text-white">
           <div className="flex flex-col items-center">
+            <img src="/DesNetLogo.png" className="mb-4" />
             <h1 className="text-2xl font-semibold text-center mb-4">
               Welcome Back
             </h1>
