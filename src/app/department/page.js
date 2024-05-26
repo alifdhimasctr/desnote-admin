@@ -202,11 +202,11 @@ export default function Department() {
                   }
                 })
                 .map((department) => (
-                  <tr key={department.id} className="text-center">
+                  <tr key={department.id} className="text-left justify-center items-center">
                     <td className="border py-1">{departmentData.indexOf(department) + 1}</td>
                     <td className="border py-1">{department.departmentName}</td>
-                    <td className="border py-1">
-                    {department.status === "Active" ? <a className="text-xs p-2 rounded text-white bg-green-500">AKTIF</a> : <a className="text-xs p-2 rounded text-white bg-red-500">INAKTIF</a>}
+                    <td className="border py-1 text-center">
+                    {department.status === "Active" ? <a className="text-xs p-2 rounded text-white bg-green-500 justify-center">AKTIF</a> : <a className="text-xs p-2 rounded text-white bg-red-500">INAKTIF</a>}
                     </td>
                     
                     <td className="flex border py-1 gap-2 justify-center">

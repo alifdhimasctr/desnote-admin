@@ -25,7 +25,7 @@ export default function Dashboard() {
     const fetchStaffData = async () => {
       setLoading(true);
 
-      const response = await axios.get(process.env.NEXT_PUBLIC_BASE_URL + "/staff/findAllStaff?name=", {
+      const response = await axios.get(process.env.NEXT_PUBLIC_BASE_URL + "/staff/findAllStaffRevamp?name=", {
         headers: {
           Authorization: `Bearer ${(data.token)}`
         }
@@ -82,9 +82,9 @@ export default function Dashboard() {
           <h1 className="text-xl font-bold text-gray-600 mb-3">Total Pimpinan</h1>
           <h1 className="text-3xl font-bold text-gray-600 mb-3">{pimpinanData.length}</h1>
         </div>
-        <div className="w-1/3 bg-white p-4 rounded-lg">
-          <h1 className="text-xl font-bold text-gray-600 mb-3">Total Department</h1>
-          <h1 className="text-3xl font-bold text-gray-600 mb-3">{departmentData.length}</h1>
+        <div class="w-1/3 bg-white p-4 rounded-lg">
+          <h1 className="text-xl font-bold text-gray-600 mb-3">Total Departemen</h1>
+          <h1 class="text-3xl font-bold text-gray-600 mb-3">{departmentData.length}</h1>
         </div>
       </div>
       </BaseLayout>
